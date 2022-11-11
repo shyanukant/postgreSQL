@@ -98,6 +98,10 @@ Delete an entry
 ```bash
  DELETE FROM [table_name] WHERE id = 1;
 ```
+Delete All entries
+```bash
+ DELETE FROM [table_name];
+```
 Get multiple entries
 ```bash
     SELECT * FROM [table name] WHERE [column_name]='[entry]' OR [column_name]='[entry]';
