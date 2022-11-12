@@ -208,3 +208,95 @@ SELECT NOW() - INTERVAL '10 MONTH';
 SELECT NOW() - INTERVAL '10 DAY';
 SELECT NOW() + INTERVAL '10 YEAR';
 ```
+
+AGE - To calculate age 
+```bash
+  SELECT [columns, AGE(NOW(), date_column)] AS [new column] FROM [table name];
+``` 
+####  ALTER
+Add new column into table
+```bash
+ ALTER TABLE [table_name] ADD COLUMN [column name] [DATA TYPE];
+```
+Delete column 
+```bash
+ALTER TABLE [table_name] DROP COLUMN [column name];
+```
+Drop PRIMARY KEY
+```bash
+ ALTER TABLE [table name] DROP CONSTRAINT "[table_name]_pkey";
+```
+Add PRIMARY KEY
+```bash
+ ALTER TABLE [table_name] ADD PRIMARY KEY(id);
+```
+Add Constraint into column
+```bash
+ALTER TABLE [table_name] ADD CONSTRAINT [constraint name] UNIQUE (column or columns);
+```
+Add Check constraint
+```bash
+ALTER TABLE [table_name] ADD CONSTRAINT [constraint name] CHECK (gender = 'Female' OR gender = 'Male' OR gender = 'Agender');
+```
+#### UPDATE
+Update your column or columns
+```bash
+ UPDATE [table_name] SET [column] = ['entry'] WHERE [column] = [entry];
+ UPDATE [table_name] SET [column] = ['entry'], [column] = ['entry'] WHERE [column] = [entry];
+```
+Don't show error on the Screen and don't reflect previous entry
+```bash
+INSERT INTO [table_name](columns) VALUES('[entries]') ON CONFLICT (entry) DO NOTHING;
+```
+Overwrite Insert Entry.
+```bash
+INSERT INTO [table_name](columns) VALUES('[entries]') ON CONFLICT (entry) DO UPDATE SET [column name] = EXCLUDED.[column name];
+```
+#### FOREIGN KEY
+```bash
+  CREATE TABLE [table name](column_name BIGSERIAL PRIMARY KEY,
+                column_name VARCHAR(50) NOT NULL,
+                date_column DATE, column_name BIGINT REFERENCES [table 2] (id)) ;
+  
+  ALTER TABLE [table_name] ADD COLUMN [column_name] BIGINT REFERENCES [table_name 2] (id);
+
+  UPDATE [table_name] SET [reference column_name] = 2 WHERE [table 2 id] = 1;
+```
+Join two table by FOREIGN KEY relationship
+```bash
+SELECT * FROM [table_name] JOIN [table_name2] ON [table_name].id = [table_name2].id;
+```
+Join two table record including which don't have FOREIGN key relationship.
+```bash
+SELECT * FROM [table_name] LEFT JOIN [table_name2] ON [table_name].id = [table_name2].id;
+```
+Export Data - CSV file
+```bash
+\copy (your query) TO '[directory_path]/data.csv' DELIMITER ',' CSV HEADER;
+```
+#### EXTENSIONS
+Show all Avialble Postgre extensions
+```bash
+SELECT * FROM pg_available_extensions;
+```
+Install Extension
+```bash
+CREATE EXTENSION IF NOT EXISTS "[extension name]";
+```
+Show Avialble functions
+```bash
+\df
+```
+Run extension's functions
+```bash
+SELECT [fuction_name()];
+```
+For example - We can use uuid_generate_v4() fucntion of UUID (unique identifier) Extension instead of BIGSERIAL. it's generate random hexdecimal id.
+```bash
+  CREATE TABLE [table name](id UUID PRIMARY KEY,
+                column_name VARCHAR(50) NOT NULL,
+                date_column DATE);
+```
+```bash
+   INSERT INTO [table name] (id, date) VALUES(uuid_generate_v4(), DATE '2022-11-22' );
+```
